@@ -1,2 +1,2 @@
 # FinistHelper
- Simple console app that could simplify your workflow as an event adin
+ Simple console app that should simplify your workflow as an event adin
