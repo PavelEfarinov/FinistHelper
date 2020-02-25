@@ -1,0 +1,77 @@
+POST requsets to
+https://ru-dev-robo.starline.ru/api/v1/data/referee/events/programs/stages/1958/bids/20262/results
+
+JSON structure is 
+{
+	"params":
+	{
+		"0":"result for 1-st form input",
+		"i":"result for i+1-st form input",
+	},
+	"number":"number of attempt",
+	"disq_action":"1-disqualify"
+}
+
+GETting overall scores is https://ru-dev-robo.starline.ru/api/v1/data/referee/events/programs/stages/1958/bids
+
+Запрос на создание новго этапа выглядит так:
+POST запрос на адрес https://ru-dev-robo.starline.ru/eventadmin/!!EVENT_ID!!/ProgramStage/create?id=!!PROGRAM_ID!!
+{
+		"RCME_ProgramStage[name]":"Group+A",
+		"RCME_ProgramStage[type_start]":"0",
+		"RCME_ProgramStage[type_transfer]":"0",
+		"RCME_ProgramStage[status]":"0",
+		"RCME_ProgramStage[hidden_results]":"0",
+		"RCME_ProgramStage[challonge_type]":"RoundRobin", /// "playOff"
+		"RCME_ProgramStage[started_at]":"",
+		"RCME_ProgramStage[match_time]":"60",
+		"yt0":""
+}
+
+STAGE_ID можно вытянуть из location header ответа сервера на POST
+
+GET по адресу https://ru-dev-robo.starline.ru/eventadmin/!!EVENT_ID!!/ProgramStage/bids?id=!!STAGE_ID!!
+возвращает страницу HTML с зашитым туда списком участников.
+
+Возможный вариант решения делать запрос через страницу с заявками
+
+GET сюда https://ru-dev-robo.starline.ru/api/v1/data/admin/events/240/bids
+возвращает список ВСЕХ заявок в джейсоне (обабатывабельно, проверить отдельно)
+
+Структура заявки:
+[
+	{
+		"id":20246,
+		"name":"1500monster",
+		"event_id":240,
+		"status":6,
+		"statusLabel":"Приняла участие",
+		"created":"2018-08-01 12:34:05",
+		"robots":[{"id":15326,"display_id":"ROB-15326","name":"1500monster"}],
+		"program_stages":
+		[{
+			"id":1950,
+			"program":
+			{
+				"id":1498,
+				"name":"Большое путешествие: старшая категория",
+				"display_id":"EPR-1498"
+			},
+			"display_id":"EPS-1950"
+		}],
+		"bidParticipants":[{"mentor":1,"participant_id":28308,"participant":{"id":28308,"last_name":"Козлов","first_name":"Андрей","middle_name":"Владимирович","display_id":"PAR-28308"}},{"mentor":0,"participant_id":28313,"participant":{"id":28313,"last_name":"Невзоров","first_name":"Алексей","middle_name":"Александрович","display_id":"PAR-28313"}},{"mentor":1,"participant_id":28415,"participant":{"id":28415,"last_name":"Игнеева","first_name":"Альфия","middle_name":"Данияровна","display_id":"PAR-28415"}}],
+		"display_id":"BID-20246"
+	}
+]
+
+POST на адрес https://ru-dev-robo.starline.ru/eventadmin/!!EVENT_ID!!/ProgramStage/bids?id=!!STAGE_ID!!
+содержит в себе
+{
+	"RCME_ProgramStage[20263]":"1",
+	"RCME_ProgramStage[20265]":"1",
+	"yt0":""
+}
+
+Для получения списка участиников парного отборочного этапа
+GET https://ru-dev-robo.starline.ru/api/v1/data/events/programs/stages/!!STAGE_ID!!/challonge/
+Из джейсона вытянуть список ['table_score']
