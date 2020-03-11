@@ -55,7 +55,8 @@ class RequestHandler(object):
 
     def create_groups(self, number_of_groups, program_id):
 
-        bid_list = self.session.get('https://ru-dev-robo.starline.ru/api/v1/data/admin/events/' + str(self.EVENT_ID) + '/bids').json()
+        bid_list = self.session.get(
+            'https://ru-dev-robo.starline.ru/api/v1/data/admin/events/' + str(self.EVENT_ID) + '/bids').json()
         filtered_bid_list = []
         for bid in bid_list:
             if bid['status'] == 6:
