@@ -110,8 +110,8 @@ class RequestHandler(object):
 
 
 login_data = {
-    "RCMS_LoginForm[username]": "pavelefarinov@gmail.com",
-    "RCMS_LoginForm[password]": "qr2177pkb",
+    "RCMS_LoginForm[username]": "email@example.com",
+    "RCMS_LoginForm[password]": "******",
     "yt0": "Войти"
 }
 server_json_template = {
